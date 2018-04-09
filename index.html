@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="button">点我</button>
+  <script>
+    button.onclick = function() {
+      let script = document.createElement('script')
+      let functionName = `ss${parseInt(Math.random()*100000)}`
+
+      window[functionName] = function(response) {
+        let p = document.createElement('p')
+        document.body.appendChild(p)
+        p.innerText = response
+      }
+
+      script.src = `http://jack.com:8002/say?callback=${functionName}`
+
+      document.body.appendChild(script)
+
+      script.onload = e => {
+        alert('success')
+        e.currentTarget.remove()
+      }
+
+      script.onerror = e => {
+        alert('error')
+        e.currentTarget.remove()
+      }
+    }
+  </script>
+</body>
+</html>
